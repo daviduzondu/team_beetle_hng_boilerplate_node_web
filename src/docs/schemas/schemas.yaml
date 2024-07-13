@@ -1,0 +1,24 @@
+Login:
+  type: object
+  properties:
+    username:
+      type: string
+    password:
+      type: string
+  example:
+    username: johndoe
+    password: secretpassword
+
+Register:
+  type: object
+  properties:
+    username:
+      type: string
+    password:
+      type: string
+    email:
+      type: string
+  example:
+    username: johndoe
+    password: secretpassword
+    email: johndoe@example.com
