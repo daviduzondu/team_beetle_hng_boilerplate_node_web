@@ -1,0 +1,76 @@
+payments:
+  post:
+    summary: Process payment with selected provider
+    tags:
+      - Payments
+    parameters:
+      - in: body
+        name: body
+        description: Payment details for provider
+        required: true
+        schema:
+          type: object
+          properties:
+            amount:
+              type: number
+              example: 100.00
+            currency:
+              type: string
+              example: 'USD'
+            provider:
+              type: string
+              example: 'stripe'
+    responses:
+      '200':
+        description: Payment processed successfully with Provider
+      '400':
+        description: Bad request, invalid parameters
+      '500':
+        description: Internal server error
+
+paymentsById:
+  get:
+    summary: Get payment by Id
+    tags:
+      - Payments
+    parameters:
+      - in: path
+        name: paymentId
+        required: true
+    responses:
+      '200':
+        description: Payment detail retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  example: 100.00
+                currency:
+                  type: string
+                  example: 'USD'
+                provider:
+                  type: string
+                  example: 'stripe'
+                paymentId:
+                  type: string
+                  example: 'abcedss'
+                paymentDate:
+                  type: date
+                  example: '2024-07-13T12:23:45.498Z'
+      '404':
+        description: Failed to retrieve transaction with provided ID
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  example: "error"
+                message:
+                  type: string
+                  example: "Failed to retrieve transaction with provided ID"
+          

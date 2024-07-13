@@ -1,0 +1,123 @@
+login:
+  post:
+    summary: User login
+    tags:
+      - Authentication
+    parameters:
+      - in: body
+        name: body
+        description: User credentials for login
+        required: true
+        schema:
+          $ref: "../swagger.yaml#definitions/Login"
+    responses:
+      '200':
+        description: Successful login
+      '401':
+        description: Invalid credentials
+      '422':
+        description: Invalid input
+
+register:
+  post:
+    summary: User registration
+    tags:
+      - Authentication
+    parameters:
+      - in: body
+        name: body
+        description: User information for registration
+        required: true
+        schema:
+          $ref:  "../swagger.yaml#definitions/Register"
+    responses:
+      '201':
+        description: User registered successfully
+      '422':
+        description: Invalid input/User already exists
+
+social:
+  post:
+    summary: Social authentication
+    tags:
+      - Authentication
+    parameters:
+      - in: body
+        name: body
+        description: Social authentication token or information
+        required: true
+        schema:
+          type: object
+          properties:
+            token:
+              type: string
+          example:
+            token: abcd1234
+    responses:
+      '200':
+        description: Successful authentication
+      '401':
+        description: Invalid credentials
+
+magic-link:
+  post:
+    summary: Magic link authentication
+    tags:
+      - Authentication
+    parameters:
+      - in: body
+        name: body
+        description: Magic link token or information
+        required: true
+        schema:
+          type: object
+          properties:
+            magicLink:
+              type: string
+          example:
+            magicLink: abcd1234
+    responses:
+      '200':
+        description: Magic link sent
+      '401':
+        description: Invalid email
+
+change-password:
+  post:
+    summary: Change password
+    tags:
+      - Authentication
+    security:
+      - BearerAuth: []
+    parameters:
+      - in: body
+        name: body
+        description: User's old and new password information
+        required: true
+        schema:
+          type: object
+          properties:
+            oldPassword:
+              type: string
+            newPassword:
+              type: string
+          example:
+            oldPassword: oldpassword
+            newPassword: newpassword
+    responses:
+      '200':
+        description: Password changed successfully
+      '401':
+        description: Wrong old password
+      '422':
+        description: Invalid input
+
+logout:
+  post:
+    summary: User logout
+    tags:
+      - Authentication
+    responses:
+      '200':
+        description: Successfully logged out
+
