@@ -1,8 +1,9 @@
-<!-- TOC start -->
 
-**Table of Contents**
+### Table of Contents
+<!-- TOC start -->
 - [TEAM BEETLE HNG BOILERPLATE Integration Documentation](#team-beetle-hng-boilerplate-integration-documentation)
   - [Overview](#overview)
+  - [Description](#description)
   - [Folder Structure](#folder-structure)
   - [Dependencies (Dev)](#dependencies-dev)
   - [API Endpoints](#api-endpoints)
@@ -56,6 +57,10 @@
 ## Overview
 
 This is a README file containing the detailed API and DATABASE design of TEAM BEETLE's HNG BOILERPLATE 
+
+## Description
+For stage 3 in the Backend Track, we were asked to come up with an architectural design for an API and database based on the requirements found here.
+
 
 ## Folder Structure
 
