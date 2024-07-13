@@ -779,120 +779,536 @@ paths:
                 $ref: '#/components/schemas/ActivityLog'
 
 components:
-  User:
-    type: object
-    properties:
-      id:
-        type: string
-        format: uuid
-      email:
-        type: string
-        format: email
-      name:
-        type: string
-      role:
-        type: string
-        enum: [user, admin, superadmin]
-      createdAt:
-        type: string
-        format: date-time
-      updatedAt:
-        type: string
-        format: date-time
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
 
-Organization:
-  type: object
-  properties:
-    id:
-      type: string
-      format: uuid
-    name:
-      type: string
-    createdAt:
-      type: string
-      format: date-time
-    updatedAt:
-      type: string
-      format: date-time
-
-Payment:
-  type: object
-  properties:
-    id:
-      type: string
-      format: uuid
-    amount:
-      type: number
-    currency:
-      type: string
-    status:
-      type: string
-      enum: [pending, completed, failed]
-    provider:
-      type: string
-      enum: [stripe, flutterwave, lemonsqueezy]
-    createdAt:
-      type: string
-      format: date-time
-
-Widget:
-  type: object
-  properties:
-    id:
-      type: string
-      format: uuid
-    name:
-      type: string
-    type:
-      type: string
-    data:
+  schemas:
+    AuthRequest:
       type: object
-    createdAt:
-      type: string
-      format: date-time
-    updatedAt:
-      type: string
-      format: date-time
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - email
+        - password
 
-BlogPost:
-  type: object
-  properties:
-    id:
-      type: string
-      format: uuid
-    title:
-      type: string
-    content:
-      type: string
-    authorId:
-      type: string
-      format: uuid
-    createdAt:
-      type: string
-      format: date-time
-    updatedAt:
-      type: string
-      format: date-time
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
 
-Notification:
-  type: object
-  properties:
-    id:
-      type: string
-      format: uuid
-    userId:
-      type: string
-      format: uuid
-    type:
-      type: string
-    message:
-      type: string
-    read:
-      type: boolean
-    createdAt:
-      type: string
-      format: date-time
+    SocialAuthRequest:
+      type: object
+      properties:
+        provider:
+          type: string
+          enum: [google, facebook, twitter]
+        token:
+          type: string
+      required:
+        - provider
+        - token
 
+    MagicLinkRequest:
+      type: object
+      properties:
+        email:
+          type: string
+      required:
+        - email
+
+    ChangePasswordRequest:
+      type: object
+      properties:
+        currentPassword:
+          type: string
+        newPassword:
+          type: string
+      required:
+        - currentPassword
+        - newPassword
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+        role:
+          type: string
+          enum: [user, admin, superadmin]
+        createdAt:
+          type: string
+          format: date-time
+    UpdateUserRequest:
+        type: object
+        properties:
+          name:
+            type: string
+          email:
+            type: string
+
+    UsersList:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+
+    CreateUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - name
+        - email
+        - password
+
+    Organization:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    OrganizationsList:
+      type: object
+      properties:
+        organizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Organization'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+
+    CreateOrganizationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+
+    UpdateOrganizationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+
+    Payment:
+      type: object
+      properties:
+        id:
+          type: string
+        amount:
+          type: number
+        currency:
+          type: string
+        status:
+          type: string
+          enum: [pending, completed, failed]
+        provider:
+          type: string
+          enum: [stripe, flutterwave, lemonsqueezy]
+        createdAt:
+          type: string
+          format: date-time
+
+    CreatePaymentRequest:
+      type: object
+      properties:
+        amount:
+          type: number
+        currency:
+          type: string
+        provider:
+          type: string
+          enum: [stripe, flutterwave, lemonsqueezy]
+      required:
+        - amount
+        - currency
+        - provider
+
+    SendMessageRequest:
+      type: object
+      properties:
+        recipient:
+          type: string
+        subject:
+          type: string
+        body:
+          type: string
+        templateId:
+          type: string
+      required:
+        - recipient
+        - subject
+        - body
+
+    UserSettings:
+      type: object
+      properties:
+        language:
+          type: string
+        region:
+          type: string
+        notifications:
+          type: object
+          properties:
+            email:
+              type: boolean
+            push:
+              type: boolean
+
+    UpdateSettingsRequest:
+      type: object
+      properties:
+        language:
+          type: string
+        region:
+          type: string
+        notifications:
+          type: object
+          properties:
+            email:
+              type: boolean
+            push:
+              type: boolean
+
+    ContactFormRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        message:
+          type: string
+      required:
+        - name
+        - email
+        - message
+
+    WaitlistRequest:
+      type: object
+      properties:
+        email:
+          type: string
+      required:
+        - email
+
+    UserDataExport:
+      type: object
+      properties:
+        personalInfo:
+          $ref: '#/components/schemas/User'
+        settings:
+          $ref: '#/components/schemas/UserSettings'
+        widgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Widget'
+
+    Widget:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        data:
+          type: object
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    WidgetsList:
+      type: object
+      properties:
+        widgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Widget'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+
+    CreateWidgetRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        data:
+          type: object
+      required:
+        - name
+        - type
+
+    DataList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+
+    ChartData:
+      type: object
+      properties:
+        labels:
+          type: array
+          items:
+            type: string
+        datasets:
+          type: array
+          items:
+            type: object
+            properties:
+              label:
+                type: string
+              data:
+                type: array
+                items:
+                  type: number
+
+    UpdateContentRequest:
+      type: object
+      properties:
+        contentId:
+          type: string
+        content:
+          type: string
+      required:
+        - contentId
+        - content
+
+    Notification:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        message:
+          type: string
+        read:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+
+    NotificationsList:
+      type: object
+      properties:
+        notifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/Notification'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+
+    BlogPost:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        author:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    BlogPostsList:
+      type: object
+      properties:
+        posts:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlogPost'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+
+    CreateInviteRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        role:
+          type: string
+          enum: [user, admin]
+      required:
+        - email
+        - role
+
+    InviteLink:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+        token:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
+
+    EmailTemplate:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        subject:
+          type: string
+        body:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    EmailTemplatesList:
+      type: object
+      properties:
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmailTemplate'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+
+    CreateEmailTemplateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        subject:
+          type: string
+        body:
+          type: string
+      required:
+        - name
+        - subject
+        - body
+
+    AIRequest:
+      type: object
+      properties:
+        prompt:
+          type: string
+        options:
+          type: object
+      required:
+        - prompt
+
+    AIResponse:
+      type: object
+      properties:
+        result:
+          type: string
+
+    ActivityLogEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        action:
+          type: string
+        details:
+          type: object
+        createdAt:
+          type: string
+          format: date-time
+
+    ActivityLog:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActivityLogEntry'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
 externalDocs:
   description: "Find out more about our API"
   url: "https://github.com/daviduzondu/team_beetle_hng_boilerplate_node_web/tree/main"
