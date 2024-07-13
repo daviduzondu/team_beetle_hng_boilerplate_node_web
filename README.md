@@ -1,3 +1,56 @@
+<!-- TOC start -->
+
+**Table of Contents**
+- [TEAM BEETLE HNG BOILERPLATE Integration Documentation](#team-beetle-hng-boilerplate-integration-documentation)
+  - [Overview](#overview)
+  - [Folder Structure](#folder-structure)
+  - [Dependencies (Dev)](#dependencies-dev)
+  - [API Endpoints](#api-endpoints)
+  - [Database Schema Documentation](#database-schema-documentation)
+  - [Database Entity Relationship Diagram](#database-entity-relationship-diagram)
+  - [Tables and Relationships](#tables-and-relationships)
+    - [1. Users (`users`)](#1-users-users)
+    - [2. Organizations (`organizations`)](#2-organizations-organizations)
+    - [3. User Organizations (`user_organization`)](#3-user-organizations-user_organization)
+    - [4. Messages (`messages`)](#4-messages-messages)
+    - [5. User Settings (`user_settings`)](#5-user-settings-user_settings)
+    - [6. Contact Submissions (`contact_submission`)](#6-contact-submissions-contact_submission)
+    - [7. Notifications (`notifications`)](#7-notifications-notifications)
+    - [8. Payments (`payments`)](#8-payments-payments)
+    - [9. Widgets (`widgets`)](#9-widgets-widgets)
+    - [10. Content (`content`)](#10-content-content)
+    - [11. Activity Log (`activity_log`)](#11-activity-log-activity_log)
+    - [12. Email Templates (`email_templates`)](#12-email-templates-email_templates)
+    - [13. Invite Links (`invite_links`)](#13-invite-links-invite_links)
+    - [14. Waitlist (`waitlist`)](#14-waitlist-waitlist)
+    - [15. Blog Posts (`blog_posts`)](#15-blog-posts-blog_posts)
+  - [Getting Started](#getting-started)
+  - [Contribution Guide](#contribution-guide)
+  - [Getting Started](#getting-started-1)
+      - [If you don't have git on your machine, install it.](#if-you-dont-have-git-on-your-machine-install-it)
+  - [Fork this repository](#fork-this-repository)
+  - [Clone the repository](#clone-the-repository)
+  - [Create a branch](#create-a-branch)
+    - [Make Changes](#make-changes)
+    - [Run Tests](#run-tests)
+  - [commit those changes](#commit-those-changes)
+  - [Push changes to GitHub](#push-changes-to-github)
+  - [Submit your changes for review into Staging](#submit-your-changes-for-review-into-staging)
+  - [Setup Instructions](#setup-instructions)
+    - [1. Clone the Repository](#1-clone-the-repository)
+    - [2. Install Dependencies](#2-install-dependencies)
+    - [3. Configure Environment Variables](#3-configure-environment-variables)
+    - [4. Compile TypeScript](#4-compile-typescript)
+    - [5. Run the Development Server](#5-run-the-development-server)
+    - [6. Run the Production Server](#6-run-the-production-server)
+    - [7. Verify the Setup](#7-verify-the-setup)
+  - [Folder Structure](#folder-structure-1)
+  - [Scripts](#scripts)
+  - [Additional Resources](#additional-resources)
+  - [Versioning](#versioning)
+
+<!-- TOC end -->
+
 # TEAM BEETLE HNG BOILERPLATE Integration Documentation
 
 ## Overview
@@ -55,6 +108,183 @@ This is a README file containing the detailed API and DATABASE design of TEAM BE
 - socket.io
 - stripe
 - uuid
+
+## API Endpoints
+
+All API endpoints can be referenced at https://team-beetle-api-docs.netlify.app/#/ 
+
+## Database Schema Documentation
+
+## Database Entity Relationship Diagram
+
+![Database Entity Relationship Diagram](https://raw.githubusercontent.com/daviduzondu/team_beetle_hng_boilerplate_node_web/main/team-beetle-erd-diagram.png)
+
+## Tables and Relationships
+
+### 1. Users (`users`)
+
+- **Description:** Stores information about users.
+- **Columns:**
+  - `id`: Primary key
+  - `email`: User's email
+  - `password_hash`: Hashed password
+  - `name`: User's name
+  - `role`: User's role in the organisation
+  - `created_at`: Timestamp of creation
+  - `updated_at`: Timestamp of last update
+
+### 2. Organizations (`organizations`)
+
+- **Description:** Stores information about organizations.
+- **Columns:**
+  - `id`: Primary key
+  - `name`: Organization name
+  - `created_at`: Timestamp of creation
+  - `updated_at`: Timestamp of last update
+
+
+### 3. User Organizations (`user_organization`)
+
+- **Description:** Associates users with organizations.
+- **Columns:**
+  - `id`: Primary key
+  - `user_id`: Foreign key referencing `users`
+  - `organization_id`: Foreign key referencing `organizations`
+  - `role`: Role of the user in the organization
+  - `created_at`: Timestamp of creation
+
+### 4. Messages (`messages`)
+
+- **Description:** Stores messages sent between users.
+- **Columns:**
+  - `id`: Primary key
+  - `sender_id`: Foreign key referencing `users` (sender)
+  - `recipient_id`: Foreign key referencing `users` (recipient)
+  - `subject`: Message subject
+  - `body`: Message Body
+  - `status`: Message status
+  - `created_at`: Timestamp of creation
+
+### 5. User Settings (`user_settings`)
+
+- **Description:** Stores settings for each user.
+- **Columns:**
+  - `id`: Primary key
+  - `user_id`: Foreign key referencing `users`
+  - `language`: User's language
+  - `region`: User's region
+  - `push_notification`: Boolean indicating if push notifications are enabled
+  - `email_notification`: Boolean indicating if email notifications are enabled
+  - `updated_at`: Timestamp of creation
+
+### 6. Contact Submissions (`contact_submission`)
+
+- **Description:** Stores contact form submissions.
+- **Columns:**
+  - `id`: Primary key
+  - `name`: Name of the person submitting the contact form
+  - `email`: Email of the person submitting the contact form
+  - `message`: Message content
+  - `created_at`: Timestamp of creation
+
+### 7. Notifications (`notifications`)
+
+- **Description:** Stores notifications for users.
+- **Columns:**
+  - `id`: Primary key
+  - `user_id`: Foreign key referencing `users`
+  - `type`: Notification type
+  - `message`: Notification message
+  - `is_read`: Boolean indicating if the notification has been read
+  - `created_at`: Timestamp of creation
+
+### 8. Payments (`payments`)
+
+- **Description:** Stores payment information.
+- **Columns:**
+  - `id`: Primary key
+  - `user_id`: Foreign key referencing `users`
+  - `amount`: Payment amount
+  - `currency`: Payment currency
+  - `status`: Payment status
+  - `provider`: Payment provider
+  - `provider_payment_id`: ID of payment provider
+  - `created_at`: Timestamp of creation
+  - `updated_at`: Timestamp of last update
+
+### 9. Widgets (`widgets`)
+
+- **Description:** Stores widget information.
+- **Columns:**
+  - `id`: Primary key
+  - `user_id`: Foreign key referencing `users`
+  - `name`: Widget name
+  - `type`: Widget type
+  - `data`: Widget data (JSON)
+  - `created_at`: Timestamp of creation
+  - `updated_at`: Timestamp of last update
+
+### 10. Content (`content`)
+
+- **Description:** Stores content information.
+- **Columns:**
+  - `id`: Primary key
+  - `type`: Content type
+  - `content`: Content data
+  - `created_at`: Timestamp of creation
+  - `updated_at`: Timestamp of last update
+
+### 11. Activity Log (`activity_log`)
+
+- **Description:** Stores user activity logs.
+- **Columns:**
+  - `id`: Primary key
+  - `user_id`: Foreign key referencing `users`
+  - `action`: Action performed by the user
+  - `details`: Additional details (JSON)
+  - `created_at`: Timestamp of creation
+
+### 12. Email Templates (`email_templates`)
+
+- **Description:** Stores email templates.
+- **Columns:**
+  - `id`: Primary key
+  - `name`: Template name
+  - `subject`: Email subject
+  - `body`: Email body
+  - `created_at`: Timestamp of creation
+  - `updated_at`: Timestamp of last update
+
+### 13. Invite Links (`invite_links`)
+
+- **Description:** Stores invite links.
+- **Columns:**
+  - `id`: Primary key
+  - `email`: Email associated with the invite
+  - `role`: Role to be assigned
+  - `token`: Token
+  - `expires_at`: Timestamp of creation
+  - `updated_at`: Timestamp of last update
+
+### 14. Waitlist (`waitlist`)
+
+- **Description:** Stores waitlist entries.
+- **Columns:**
+  - `id`: Primary key
+  - `email`: Email of the person on the waitlist
+  - `created_at`: Timestamp of creation
+
+### 15. Blog Posts (`blog_posts`)
+
+- **Description:** Stores blog posts.
+- **Columns:**
+  - `id`: Primary key
+  - `title`: Blog post title
+  - `content`: Blog post content
+  - `author_id`: Foreign key referencing `users`
+  - `created_at`: Timestamp of creation
+  - `updated_at`: Timestamp of last update
+
 ****
 ## Getting Started
 
@@ -275,183 +505,6 @@ Here are some useful npm scripts that you can use during development and product
 - [Express Documentation](https://expressjs.com/)
 
 By following these steps, you should have your Node.js and TypeScript application up and running. If you encounter any issues, please refer to the documentation of the respective tools or seek help from the community.
-
-## API Endpoints
-
-All API endpoints can be referenced at https://team-beetle-api-docs.netlify.app/#/ 
-
-## Database Schema Documentation
-
-## Database Entity Relationship Diagram
-
-![Database Entity Relationship Diagram](https://raw.githubusercontent.com/daviduzondu/team_beetle_hng_boilerplate_node_web/main/team-beetle-erd-diagram.png)
-
-## Tables and Relationships
-
-### 1. Users (`users`)
-
-- **Description:** Stores information about users.
-- **Columns:**
-  - `id`: Primary key
-  - `email`: User's email
-  - `password_hash`: Hashed password
-  - `name`: User's name
-  - `role`: User's role in the organisation
-  - `created_at`: Timestamp of creation
-  - `updated_at`: Timestamp of last update
-
-### 2. Organizations (`organizations`)
-
-- **Description:** Stores information about organizations.
-- **Columns:**
-  - `id`: Primary key
-  - `name`: Organization name
-  - `created_at`: Timestamp of creation
-  - `updated_at`: Timestamp of last update
-
-
-### 3. User Organizations (`user_organization`)
-
-- **Description:** Associates users with organizations.
-- **Columns:**
-  - `id`: Primary key
-  - `user_id`: Foreign key referencing `users`
-  - `organization_id`: Foreign key referencing `organizations`
-  - `role`: Role of the user in the organization
-  - `created_at`: Timestamp of creation
-
-### 4. Messages (`messages`)
-
-- **Description:** Stores messages sent between users.
-- **Columns:**
-  - `id`: Primary key
-  - `sender_id`: Foreign key referencing `users` (sender)
-  - `recipient_id`: Foreign key referencing `users` (recipient)
-  - `subject`: Message subject
-  - `body`: Message Body
-  - `status`: Message status
-  - `created_at`: Timestamp of creation
-
-### 5. User Settings (`user_settings`)
-
-- **Description:** Stores settings for each user.
-- **Columns:**
-  - `id`: Primary key
-  - `user_id`: Foreign key referencing `users`
-  - `language`: User's language
-  - `region`: User's region
-  - `push_notification`: Boolean indicating if push notifications are enabled
-  - `email_notification`: Boolean indicating if email notifications are enabled
-  - `updated_at`: Timestamp of creation
-
-### 6. Contact Submissions (`contact_submission`)
-
-- **Description:** Stores contact form submissions.
-- **Columns:**
-  - `id`: Primary key
-  - `name`: Name of the person submitting the contact form
-  - `email`: Email of the person submitting the contact form
-  - `message`: Message content
-  - `created_at`: Timestamp of creation
-
-### 7. Notifications (`notifications`)
-
-- **Description:** Stores notifications for users.
-- **Columns:**
-  - `id`: Primary key
-  - `user_id`: Foreign key referencing `users`
-  - `type`: Notification type
-  - `message`: Notification message
-  - `is_read`: Boolean indicating if the notification has been read
-  - `created_at`: Timestamp of creation
-
-### 8. Payments (`payments`)
-
-- **Description:** Stores payment information.
-- **Columns:**
-  - `id`: Primary key
-  - `user_id`: Foreign key referencing `users`
-  - `amount`: Payment amount
-  - `currency`: Payment currency
-  - `status`: Payment status
-  - `provider`: Payment provider
-  - `provider_payment_id`: ID of payment provider
-  - `created_at`: Timestamp of creation
-  - `updated_at`: Timestamp of last update
-
-### 9. Widgets (`widgets`)
-
-- **Description:** Stores widget information.
-- **Columns:**
-  - `id`: Primary key
-  - `user_id`: Foreign key referencing `users`
-  - `name`: Widget name
-  - `type`: Widget type
-  - `data`: Widget data (JSON)
-  - `created_at`: Timestamp of creation
-  - `updated_at`: Timestamp of last update
-
-### 10. Content (`content`)
-
-- **Description:** Stores content information.
-- **Columns:**
-  - `id`: Primary key
-  - `type`: Content type
-  - `content`: Content data
-  - `created_at`: Timestamp of creation
-  - `updated_at`: Timestamp of last update
-
-### 11. Activity Log (`activity_log`)
-
-- **Description:** Stores user activity logs.
-- **Columns:**
-  - `id`: Primary key
-  - `user_id`: Foreign key referencing `users`
-  - `action`: Action performed by the user
-  - `details`: Additional details (JSON)
-  - `created_at`: Timestamp of creation
-
-### 12. Email Templates (`email_templates`)
-
-- **Description:** Stores email templates.
-- **Columns:**
-  - `id`: Primary key
-  - `name`: Template name
-  - `subject`: Email subject
-  - `body`: Email body
-  - `created_at`: Timestamp of creation
-  - `updated_at`: Timestamp of last update
-
-### 13. Invite Links (`invite_links`)
-
-- **Description:** Stores invite links.
-- **Columns:**
-  - `id`: Primary key
-  - `email`: Email associated with the invite
-  - `role`: Role to be assigned
-  - `token`: Token
-  - `expires_at`: Timestamp of creation
-  - `updated_at`: Timestamp of last update
-
-### 14. Waitlist (`waitlist`)
-
-- **Description:** Stores waitlist entries.
-- **Columns:**
-  - `id`: Primary key
-  - `email`: Email of the person on the waitlist
-  - `created_at`: Timestamp of creation
-
-### 15. Blog Posts (`blog_posts`)
-
-- **Description:** Stores blog posts.
-- **Columns:**
-  - `id`: Primary key
-  - `title`: Blog post title
-  - `content`: Blog post content
-  - `author_id`: Foreign key referencing `users`
-  - `created_at`: Timestamp of creation
-  - `updated_at`: Timestamp of last update
-
 
 ## Versioning
 
