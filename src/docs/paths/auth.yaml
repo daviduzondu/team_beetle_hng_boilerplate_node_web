@@ -87,6 +87,8 @@ change-password:
     summary: Change password
     tags:
       - Authentication
+    security:
+      - BearerAuth: []
     parameters:
       - in: body
         name: body
