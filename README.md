@@ -11,89 +11,23 @@ This is a README file containing the detailed API and DATABASE design of TEAM BE
 ├── API_REFERENCE.md
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTORS_GUIDE.md
+├── docs
+│   ├── index.html
+│   ├── public
+│   └── swagger.yaml
+├── LICENSE
+├── package.json
+├── package-lock.json
 ├── README.md
 ├── src
-│   ├── app.ts
 │   ├── controllers
-│   │   └── v1
-│   │       ├── auth.controller.ts
-│   │       ├── content.controller.ts
-│   │       ├── dashboard.controller.ts
-│   │       ├── email.controller.ts
-│   │       ├── index.ts
-│   │       ├── notification.controller.ts
-│   │       ├── organization.controller.ts
-│   │       ├── payment.controller.ts
-│   │       ├── settings.controller.ts
-│   │       ├── superadmin.controller.ts
-│   │       └── user.controller.ts
-│   ├── database
-│   │   ├── index.ts
-│   │   └── models
-│   │       ├── Organization.ts
-│   │       ├── UserOrganization.ts
-│   │       └── User.ts
 │   ├── interfaces
-│   │   ├── auth.interface.ts
-│   │   ├── content.interface.ts
-│   │   ├── dashboard.interface.ts
-│   │   ├── email.interface.ts
-│   │   ├── index.ts
-│   │   ├── notification.interface.ts
-│   │   ├── organization.interface.ts
-│   │   ├── payment.interface.ts
-│   │   ├── settings.interface.ts
-│   │   ├── superadmin.interface.ts
-│   │   └── user.interface.ts
-│   ├── middlewares
-│   │   ├── auth.middleware.ts
-│   │   ├── error.middleware.ts
-│   │   └── validation.middleware.ts
-│   ├── routes
-│   │   └── v1
-│   │       ├── auth.route.ts
-│   │       ├── content.route.ts
-│   │       ├── dashboard.route.ts
-│   │       ├── email.route.ts
-│   │       ├── notification.route.ts
-│   │       ├── organization.route.ts
-│   │       ├── payment.route.ts
-│   │       ├── settings.route.ts
-│   │       ├── superadmin.route.ts
-│   │       └── user.route.ts
-│   ├── server.ts
 │   ├── services
-│   │   ├── auth.service.ts
-│   │   ├── content.service.ts
-│   │   ├── dashboard.service.ts
-│   │   ├── email.service.ts
-│   │   ├── greeting.service.ts
-│   │   ├── index.ts
-│   │   ├── notification.service.ts
-│   │   ├── organization.service.ts
-│   │   ├── payment.service.ts
-│   │   ├── settings.service.ts
-│   │   ├── superadmin.service.ts
-│   │   └── user.service.ts
 │   └── utils
-│       ├── constants.ts
-│       ├── helpers.ts
-│       ├── index.ts
-│       └── pick.ts
+├── team-beetle-erd-diagram.png
 ├── tests
-│   ├── auth.test.ts
-│   ├── content.test.ts
-│   ├── dashboard.test.ts
-│   ├── email.test.ts
-│   ├── notification.test.ts
-│   ├── organization.test.ts
-│   ├── payment.test.ts
-│   ├── settings.test.ts
-│   ├── superadmin.test.ts
-│   └── user.test.ts
 └── tsconfig.json
 ```
-
 ## Dependencies (Dev)
 
 - Node.js
@@ -306,86 +240,21 @@ Here's an overview of the project's folder structure:
 ├── API_REFERENCE.md
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTORS_GUIDE.md
+├── docs
+│   ├── index.html
+│   ├── public
+│   └── swagger.yaml
+├── LICENSE
+├── package.json
+├── package-lock.json
 ├── README.md
 ├── src
-│   ├── app.ts
 │   ├── controllers
-│   │   └── v1
-│   │       ├── auth.controller.ts
-│   │       ├── content.controller.ts
-│   │       ├── dashboard.controller.ts
-│   │       ├── email.controller.ts
-│   │       ├── index.ts
-│   │       ├── notification.controller.ts
-│   │       ├── organization.controller.ts
-│   │       ├── payment.controller.ts
-│   │       ├── settings.controller.ts
-│   │       ├── superadmin.controller.ts
-│   │       └── user.controller.ts
-│   ├── database
-│   │   ├── index.ts
-│   │   └── models
-│   │       ├── Organization.ts
-│   │       ├── UserOrganization.ts
-│   │       └── User.ts
 │   ├── interfaces
-│   │   ├── auth.interface.ts
-│   │   ├── content.interface.ts
-│   │   ├── dashboard.interface.ts
-│   │   ├── email.interface.ts
-│   │   ├── index.ts
-│   │   ├── notification.interface.ts
-│   │   ├── organization.interface.ts
-│   │   ├── payment.interface.ts
-│   │   ├── settings.interface.ts
-│   │   ├── superadmin.interface.ts
-│   │   └── user.interface.ts
-│   ├── middlewares
-│   │   ├── auth.middleware.ts
-│   │   ├── error.middleware.ts
-│   │   └── validation.middleware.ts
-│   ├── routes
-│   │   └── v1
-│   │       ├── auth.route.ts
-│   │       ├── content.route.ts
-│   │       ├── dashboard.route.ts
-│   │       ├── email.route.ts
-│   │       ├── notification.route.ts
-│   │       ├── organization.route.ts
-│   │       ├── payment.route.ts
-│   │       ├── settings.route.ts
-│   │       ├── superadmin.route.ts
-│   │       └── user.route.ts
-│   ├── server.ts
 │   ├── services
-│   │   ├── auth.service.ts
-│   │   ├── content.service.ts
-│   │   ├── dashboard.service.ts
-│   │   ├── email.service.ts
-│   │   ├── greeting.service.ts
-│   │   ├── index.ts
-│   │   ├── notification.service.ts
-│   │   ├── organization.service.ts
-│   │   ├── payment.service.ts
-│   │   ├── settings.service.ts
-│   │   ├── superadmin.service.ts
-│   │   └── user.service.ts
 │   └── utils
-│       ├── constants.ts
-│       ├── helpers.ts
-│       ├── index.ts
-│       └── pick.ts
+├── team-beetle-erd-diagram.png
 ├── tests
-│   ├── auth.test.ts
-│   ├── content.test.ts
-│   ├── dashboard.test.ts
-│   ├── email.test.ts
-│   ├── notification.test.ts
-│   ├── organization.test.ts
-│   ├── payment.test.ts
-│   ├── settings.test.ts
-│   ├── superadmin.test.ts
-│   └── user.test.ts
 └── tsconfig.json
 ```
 
