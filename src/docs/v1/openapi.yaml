@@ -1,0 +1,42 @@
+openapi: 3.0.0
+info:
+  title: Boilerplate API
+  version: 1.0.0
+  description: API for the comprehensive boilerplate application
+
+servers:
+  - url: https://api.example.com/v1
+
+tags:
+  $ref: './tags.yaml'
+
+paths:
+  $ref: './paths/auth.yaml'
+  $ref: './paths/users.yaml'
+  $ref: './paths/organizations.yaml'
+  $ref: './paths/payments.yaml'
+  $ref: './paths/messages.yaml'
+  $ref: './paths/settings.yaml'
+  $ref: './paths/contact.yaml'
+  $ref: './paths/waitlist.yaml'
+  $ref: './paths/user-data.yaml'
+  $ref: './paths/widgets.yaml'
+  $ref: './paths/data.yaml'
+  $ref: './paths/charts.yaml'
+  $ref: './paths/content.yaml'
+  $ref: './paths/notifications.yaml'
+  $ref: './paths/blog.yaml'
+  $ref: './paths/invite.yaml'
+  $ref: './paths/email-templates.yaml'
+  $ref: './paths/ai.yaml'
+  $ref: './paths/activity-log.yaml'
+
+components:
+  schemas:
+    $ref: './components/schemas.yaml'
+  securitySchemes:
+    $ref: './components/security-schemes.yaml'
+  parameters:
+    $ref: './components/parameters.yaml'
+  responses:
+    $ref: './components/responses.yaml'

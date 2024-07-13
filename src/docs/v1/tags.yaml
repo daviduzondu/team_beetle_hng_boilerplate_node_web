@@ -1,0 +1,69 @@
+tags:
+  - name: Authentication
+    description: Endpoints for user authentication and authorization
+
+  - name: Users
+    description: User management operations
+
+  - name: Organizations
+    description: Organization management operations
+
+  - name: Payments
+    description: Payment processing and management
+
+  - name: Messages
+    description: Messaging functionality, including emails
+
+  - name: Settings
+    description: User and application settings management
+
+  - name: Contact
+    description: Contact form submissions
+
+  - name: Waitlist
+    description: Waitlist management for upcoming features
+
+  - name: User Data
+    description: User data export and management
+
+  - name: Widgets
+    description: Widget management for user dashboards
+
+  - name: Data
+    description: General data operations and queries
+
+  - name: Charts
+    description: Chart data generation and management
+
+  - name: Content
+    description: Content management for static pages
+
+  - name: Notifications
+    description: User notification management
+
+  - name: Blog
+    description: Blog post management
+
+  - name: Invite
+    description: User invitation system
+
+  - name: Email Templates
+    description: Email template management
+
+  - name: AI
+    description: AI-related operations and integrations
+
+  - name: Activity Log
+    description: User activity logging and retrieval
+
+  - name: Superadmin
+    description: Superadmin operations for system management
+
+  - name: GDPR
+    description: GDPR compliance-related operations
+
+  - name: Internationalization
+    description: Language and region settings
+
+  - name: Push Notifications
+    description: Push notification management

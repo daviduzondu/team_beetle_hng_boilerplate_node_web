@@ -1,0 +1,246 @@
+/users:
+  get:
+    summary: List users
+    description: Retrieve a list of users. This endpoint supports pagination and sorting.
+    tags:
+      - Users
+    parameters:
+      - $ref: '../components/parameters.yaml#/pagination'
+      - $ref: '../components/parameters.yaml#/sortOrder'
+      - name: search
+        in: query
+        schema:
+          type: string
+        description: Search term to filter users by name or email
+    security:
+      - BearerAuth: []
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                users:
+                  type: array
+                  items:
+                    $ref: '../components/schemas.yaml#/User'
+                totalCount:
+                  type: integer
+                page:
+                  type: integer
+                limit:
+                  type: integer
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        description: Forbidden - User doesn't have the necessary permissions
+
+  post:
+    summary: Create a new user
+    description: Create a new user account
+    tags:
+      - Users
+    security:
+      - BearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - email
+              - password
+              - name
+            properties:
+              email:
+                type: string
+                format: email
+              password:
+                type: string
+                format: password
+              name:
+                type: string
+              role:
+                type: string
+                enum: [user, admin]
+    responses:
+      '201':
+        description: User created successfully
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/User'
+      '400':
+        $ref: '../components/responses.yaml#/BadRequest'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        description: Forbidden - User doesn't have the necessary permissions
+
+/users/{userId}:
+  get:
+    summary: Get user details
+    description: Retrieve details of a specific user
+    tags:
+      - Users
+    parameters:
+      - $ref: '../components/parameters.yaml#/userId'
+    security:
+      - BearerAuth: []
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/User'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        description: Forbidden - User doesn't have the necessary permissions
+      '404':
+        $ref: '../components/responses.yaml#/NotFound'
+
+  put:
+    summary: Update user
+    description: Update details of a specific user
+    tags:
+      - Users
+    parameters:
+      - $ref: '../components/parameters.yaml#/userId'
+    security:
+      - BearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              email:
+                type: string
+                format: email
+              role:
+                type: string
+                enum: [user, admin]
+    responses:
+      '200':
+        description: User updated successfully
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/User'
+      '400':
+        $ref: '../components/responses.yaml#/BadRequest'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        description: Forbidden - User doesn't have the necessary permissions
+      '404':
+        $ref: '../components/responses.yaml#/NotFound'
+
+  delete:
+    summary: Delete user
+    description: Delete a specific user
+    tags:
+      - Users
+    parameters:
+      - $ref: '../components/parameters.yaml#/userId'
+    security:
+      - BearerAuth: []
+    responses:
+      '204':
+        description: User deleted successfully
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        description: Forbidden - User doesn't have the necessary permissions
+      '404':
+        $ref: '../components/responses.yaml#/NotFound'
+
+/users/{userId}/settings:
+  get:
+    summary: Get user settings
+    description: Retrieve the settings for a specific user
+    tags:
+      - Users
+      - Settings
+    parameters:
+      - $ref: '../components/parameters.yaml#/userId'
+    security:
+      - BearerAuth: []
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/UserSettings'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        description: Forbidden - User doesn't have the necessary permissions
+      '404':
+        $ref: '../components/responses.yaml#/NotFound'
+
+  put:
+    summary: Update user settings
+    description: Update the settings for a specific user
+    tags:
+      - Users
+      - Settings
+    parameters:
+      - $ref: '../components/parameters.yaml#/userId'
+    security:
+      - BearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas.yaml#/UserSettings'
+    responses:
+      '200':
+        description: User settings updated successfully
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/UserSettings'
+      '400':
+        $ref: '../components/responses.yaml#/BadRequest'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        description: Forbidden - User doesn't have the necessary permissions
+      '404':
+        $ref: '../components/responses.yaml#/NotFound'
+
+/users/{userId}/export:
+  get:
+    summary: Export user data
+    description: Export all data associated with a specific user
+    tags:
+      - Users
+      - User Data
+    parameters:
+      - $ref: '../components/parameters.yaml#/userId'
+    security:
+      - BearerAuth: []
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/UserDataExport'
+      '401':
+        $ref: '../components/responses.yaml#/Unauthorized'
+      '403':
+        description: Forbidden - User doesn't have the necessary permissions
+      '404':
+        $ref: '../components/responses.yaml#/NotFound'

@@ -1,0 +1,39 @@
+NotFound:
+  description: The specified resource was not found
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+
+Unauthorized:
+  description: Authentication information is missing or invalid
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+
+BadRequest:
+  description: The request was invalid or cannot be served
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+
+InternalServerError:
+  description: The server has encountered a situation it doesn't know how to handle
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
