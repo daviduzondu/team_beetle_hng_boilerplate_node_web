@@ -16,16 +16,16 @@ Most endpoints require authentication using a Bearer token. Include the token in
 - `POST /auth/register`: Register a new user
 - `POST /auth/logout`: Log out a user
 - `POST /auth/refresh`: Refresh an access token
-- `POST /auth/forgot-password`: Request a password reset
-- `POST /auth/reset-password`: Reset a user's password
+- `POST /auth/change-password`: Reset user password
+
+## Users
 - `GET /users`: List users
 - `POST /users`: Create a new user
 - `GET /users/{userId}`: Get user details
 - `PUT /users/{userId}`: Update user details
 - `DELETE /users/{userId}`: Delete a user
-- `GET /users/{userId}/settings`: Get user settings
-- `PUT /users/{userId}/settings`: Update user settings
 - `GET /users/{userId}/export`: Export user data
+  
 
 ### Organizations
 
@@ -68,6 +68,10 @@ Most endpoints require authentication using a Bearer token. Include the token in
 - `GET /notifications`: List notifications
 - `POST /notifications`: Create a new notification
 - `PUT /notifications/{notificationId}/read`: Mark a notification as read
+
+### Settings
+- `GET /settings`: Get user settings
+- `PUT /settings`: Update user settings
 
 ### Invites
 

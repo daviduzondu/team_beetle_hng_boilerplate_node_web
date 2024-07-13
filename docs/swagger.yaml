@@ -32,9 +32,6 @@ tags:
   - name: Waitlist
     description: Waitlist management for upcoming features
 
-  - name: User Data
-    description: User data export and management
-
   - name: Widgets
     description: Widget management for user dashboards
 
@@ -241,6 +238,32 @@ paths:
         '204':
           description: User deleted successfully
 
+  /users/{userId}/export:
+    get:
+      tags:
+        - Users
+      summary: Export user data
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+          description: ID of the user whose data is to be exported
+      responses:
+        '200':
+          description: User data exported successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDataExport'
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+
   /organizations:
     get:
       tags:
@@ -368,7 +391,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Payment'
-
+    
+    get:
+      tags:
+        - Payments
+      summary: List payments
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: Page number for pagination
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: Number of results per page
+      responses:
+        '200':
+          description: List of payments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment'
+  
   /payments/{paymentId}:
     get:
       tags:
@@ -471,21 +521,6 @@ paths:
       responses:
         '201':
           description: Added to waitlist successfully
-
-  /user-data:
-    get:
-      tags:
-        - User Data
-      summary: Export user data
-      security:
-        - BearerAuth: []
-      responses:
-        '200':
-          description: User data exported successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserDataExport'
 
   /widgets:
     get:
@@ -654,6 +689,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotificationsList'
+  
+  /notifications/{notificationId}/read:
+    put:
+      tags:
+        - Notifications
+      summary: Mark a notification as read
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: notificationId
+          required: true
+          schema:
+            type: string
+          description: ID of the notification to mark as read
+      responses:
+        '200':
+          description: Notification marked as read successfully
+        '404':
+          description: Notification not found
+        '500':
+          description: Internal server error
 
   /blog:
     get:
@@ -676,8 +733,96 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BlogPostsList'
+    post:
+      tags:
+        - Blog
+      summary: Create a new blog post
+      parameters:
+        - in: body
+          name: body
+          description: Blog post content
+          required: true
+          schema:
+            $ref: '#/components/schemas/BlogPost'
+      responses:
+        '201':
+          description: Blog post created successfully
+        '400':
+          description: Bad request, invalid input
+        '500':
+          description: Internal server error
 
-  /invite:
+  /blog/{id}:
+    get:
+      tags:
+        - Blog
+      summary: Get a blog post by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the blog post to retrieve
+      responses:
+        '200':
+          description: Blog post retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlogPost'
+        '404':
+          description: Blog post not found
+        '500':
+          description: Internal server error
+
+    put:
+      tags:
+        - Blog
+      summary: Update a blog post
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the blog post to update
+        - in: body
+          name: body
+          description: Updated blog post content
+          required: true
+          schema:
+            $ref: '#/components/schemas/BlogPost'
+      responses:
+        '200':
+          description: Blog post updated successfully
+        '400':
+          description: Bad request, invalid input
+        '404':
+          description: Blog post not found
+        '500':
+          description: Internal server error
+
+    delete:
+      tags:
+        - Blog
+      summary: Delete a blog post
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the blog post to delete
+      responses:
+        '204':
+          description: Blog post deleted successfully
+        '404':
+          description: Blog post not found
+        '500':
+          description: Internal server error
+
+  /invites:
     post:
       tags:
         - Invite
@@ -850,6 +995,7 @@ components:
         createdAt:
           type: string
           format: date-time
+
     UpdateUserRequest:
         type: object
         properties:
