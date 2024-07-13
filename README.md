@@ -100,8 +100,29 @@
 - TypeScript
 - Express
 - ts-node-dev
-- [Other dependencies]
-
+- axios
+- bcrypt
+- cloudinary
+- cookie-parser
+- cors
+- dotenv
+- express-rate-limit
+- flutterwave-node
+- jsonwebtoken
+- mjml
+- morgan
+- multer
+- nodemailer
+- passport
+- passport-jwt
+- pg
+- sequelize
+- seuqelize-cli
+- socket.io
+- stripe
+- uuid
+- 
+****
 ## Getting Started
 
 Before you begin, ensure you have the following installed on your machine:
