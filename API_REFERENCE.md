@@ -15,7 +15,7 @@
 
 #### [SubTitle]
 
-- **Endpoint:** `/api/[version]/[endpoint]`
+- **Endpoint:** `/api/v1/[endpoint]`
 - **Method:** [HTTP-Method]
 - **Description:** [Description]
 
@@ -56,4 +56,4 @@
 
 ## Versioning
 
-This API is versioned to ensure backward compatibility and easy maintenance. The current version is [version].
+This API is versioned to ensure backward compatibility and easy maintenance. The current version is v1.
