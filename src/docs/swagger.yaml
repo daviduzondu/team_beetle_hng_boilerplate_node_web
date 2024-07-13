@@ -4,8 +4,8 @@ info:
   version: "1.0.0"
   title: "Team Beetle Boilerplate API documentation"
   license:
-    name: "Apache 2.0"
-    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    name: "MIT"
+    url: "https://raw.githubusercontent.com/daviduzondu/team_beetle_hng_boilerplate_node_web/main/LICENSE"
 
 tags:
   - name: Authentication
