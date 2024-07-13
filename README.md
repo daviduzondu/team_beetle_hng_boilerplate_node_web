@@ -1,8 +1,8 @@
-# [App Name] Integration Documentation
+# TEAM BEETLE HNG BOILERPLATE Integration Documentation
 
 ## Overview
 
-[Description]
+This is a README file containing the detailed API and DATABASE design of TEAM BEETLE's HNG BOILERPLATE 
 
 ## Folder Structure
 
@@ -121,7 +121,6 @@
 - socket.io
 - stripe
 - uuid
-- 
 ****
 ## Getting Started
 
@@ -303,92 +302,22 @@ Open your browser and navigate to `http://localhost:3000/api/v1/` to verify that
 Here's an overview of the project's folder structure:
 
 ```
-.
-├── API_REFERENCE.md
-├── CODE_OF_CONDUCT.md
-├── CONTRIBUTORS_GUIDE.md
-├── README.md
-├── src
-│   ├── app.ts
-│   ├── controllers
-│   │   └── v1
-│   │       ├── auth.controller.ts
-│   │       ├── content.controller.ts
-│   │       ├── dashboard.controller.ts
-│   │       ├── email.controller.ts
-│   │       ├── index.ts
-│   │       ├── notification.controller.ts
-│   │       ├── organization.controller.ts
-│   │       ├── payment.controller.ts
-│   │       ├── settings.controller.ts
-│   │       ├── superadmin.controller.ts
-│   │       └── user.controller.ts
-│   ├── database
-│   │   ├── index.ts
-│   │   └── models
-│   │       ├── Organization.ts
-│   │       ├── UserOrganization.ts
-│   │       └── User.ts
-│   ├── interfaces
-│   │   ├── auth.interface.ts
-│   │   ├── content.interface.ts
-│   │   ├── dashboard.interface.ts
-│   │   ├── email.interface.ts
-│   │   ├── index.ts
-│   │   ├── notification.interface.ts
-│   │   ├── organization.interface.ts
-│   │   ├── payment.interface.ts
-│   │   ├── settings.interface.ts
-│   │   ├── superadmin.interface.ts
-│   │   └── user.interface.ts
-│   ├── middlewares
-│   │   ├── auth.middleware.ts
-│   │   ├── error.middleware.ts
-│   │   └── validation.middleware.ts
-│   ├── routes
-│   │   └── v1
-│   │       ├── auth.route.ts
-│   │       ├── content.route.ts
-│   │       ├── dashboard.route.ts
-│   │       ├── email.route.ts
-│   │       ├── notification.route.ts
-│   │       ├── organization.route.ts
-│   │       ├── payment.route.ts
-│   │       ├── settings.route.ts
-│   │       ├── superadmin.route.ts
-│   │       └── user.route.ts
-│   ├── server.ts
-│   ├── services
-│   │   ├── auth.service.ts
-│   │   ├── content.service.ts
-│   │   ├── dashboard.service.ts
-│   │   ├── email.service.ts
-│   │   ├── greeting.service.ts
-│   │   ├── index.ts
-│   │   ├── notification.service.ts
-│   │   ├── organization.service.ts
-│   │   ├── payment.service.ts
-│   │   ├── settings.service.ts
-│   │   ├── superadmin.service.ts
-│   │   └── user.service.ts
-│   └── utils
-│       ├── constants.ts
-│       ├── helpers.ts
-│       ├── index.ts
-│       └── pick.ts
-├── tests
-│   ├── auth.test.ts
-│   ├── content.test.ts
-│   ├── dashboard.test.ts
-│   ├── email.test.ts
-│   ├── notification.test.ts
-│   ├── organization.test.ts
-│   ├── payment.test.ts
-│   ├── settings.test.ts
-│   ├── superadmin.test.ts
-│   └── user.test.ts
-└── tsconfig.json
-
+|--- src
+|    |--- controllers
+          |--- v1
+|    |--- database
+|    |--- interfaces
+|    |--- middlewares
+|    |--- routes
+|         |--- v1
+|    |--- services
+|    |--- utils
+|    |--- server.ts
+|--- .env
+|--- app.ts
+|--- .gitignore
+|--- package.json
+|--- tsconfig.json
 ```
 
 ## Scripts
@@ -412,6 +341,179 @@ By following these steps, you should have your Node.js and TypeScript applicatio
 ## API Endpoints
 
 All API endpoints can be referenced in the [API Reference](API_REFERENCE.md) document.
+
+## Database Schema Documentation
+
+## Database Entity Relationship Diagram
+
+![Database Entity Relationship Diagram](https://raw.githubusercontent.com/daviduzondu/team_beetle_hng_boilerplate_node_web/main/team-beetle-erd-diagram.png)
+
+## Tables and Relationships
+
+### 1. Users (`users`)
+
+- **Description:** Stores information about users.
+- **Columns:**
+  - `id`: Primary key
+  - `email`: User's email
+  - `password_hash`: Hashed password
+  - `name`: User's name
+  - `role`: User's role in the organisation
+  - `created_at`: Timestamp of creation
+  - `updated_at`: Timestamp of last update
+
+### 2. Organizations (`organizations`)
+
+- **Description:** Stores information about organizations.
+- **Columns:**
+  - `id`: Primary key
+  - `name`: Organization name
+  - `created_at`: Timestamp of creation
+  - `updated_at`: Timestamp of last update
+
+
+### 3. User Organizations (`user_organization`)
+
+- **Description:** Associates users with organizations.
+- **Columns:**
+  - `id`: Primary key
+  - `user_id`: Foreign key referencing `users`
+  - `organization_id`: Foreign key referencing `organizations`
+  - `role`: Role of the user in the organization
+  - `created_at`: Timestamp of creation
+
+### 4. Messages (`messages`)
+
+- **Description:** Stores messages sent between users.
+- **Columns:**
+  - `id`: Primary key
+  - `sender_id`: Foreign key referencing `users` (sender)
+  - `recipient_id`: Foreign key referencing `users` (recipient)
+  - `subject`: Message subject
+  - `body`: Message Body
+  - `status`: Message status
+  - `created_at`: Timestamp of creation
+
+### 5. User Settings (`user_settings`)
+
+- **Description:** Stores settings for each user.
+- **Columns:**
+  - `id`: Primary key
+  - `user_id`: Foreign key referencing `users`
+  - `language`: User's language
+  - `region`: User's region
+  - `push_notification`: Boolean indicating if push notifications are enabled
+  - `email_notification`: Boolean indicating if email notifications are enabled
+  - `updated_at`: Timestamp of creation
+
+### 6. Contact Submissions (`contact_submission`)
+
+- **Description:** Stores contact form submissions.
+- **Columns:**
+  - `id`: Primary key
+  - `name`: Name of the person submitting the contact form
+  - `email`: Email of the person submitting the contact form
+  - `message`: Message content
+  - `created_at`: Timestamp of creation
+
+### 7. Notifications (`notifications`)
+
+- **Description:** Stores notifications for users.
+- **Columns:**
+  - `id`: Primary key
+  - `user_id`: Foreign key referencing `users`
+  - `type`: Notification type
+  - `message`: Notification message
+  - `is_read`: Boolean indicating if the notification has been read
+  - `created_at`: Timestamp of creation
+
+### 8. Payments (`payments`)
+
+- **Description:** Stores payment information.
+- **Columns:**
+  - `id`: Primary key
+  - `user_id`: Foreign key referencing `users`
+  - `amount`: Payment amount
+  - `currency`: Payment currency
+  - `status`: Payment status
+  - `provider`: Payment provider
+  - `provider_payment_id`: ID of payment provider
+  - `created_at`: Timestamp of creation
+  - `updated_at`: Timestamp of last update
+
+### 9. Widgets (`widgets`)
+
+- **Description:** Stores widget information.
+- **Columns:**
+  - `id`: Primary key
+  - `user_id`: Foreign key referencing `users`
+  - `name`: Widget name
+  - `type`: Widget type
+  - `data`: Widget data (JSON)
+  - `created_at`: Timestamp of creation
+  - `updated_at`: Timestamp of last update
+
+### 10. Content (`content`)
+
+- **Description:** Stores content information.
+- **Columns:**
+  - `id`: Primary key
+  - `type`: Content type
+  - `content`: Content data
+  - `created_at`: Timestamp of creation
+  - `updated_at`: Timestamp of last update
+
+### 11. Activity Log (`activity_log`)
+
+- **Description:** Stores user activity logs.
+- **Columns:**
+  - `id`: Primary key
+  - `user_id`: Foreign key referencing `users`
+  - `action`: Action performed by the user
+  - `details`: Additional details (JSON)
+  - `created_at`: Timestamp of creation
+
+### 12. Email Templates (`email_templates`)
+
+- **Description:** Stores email templates.
+- **Columns:**
+  - `id`: Primary key
+  - `name`: Template name
+  - `subject`: Email subject
+  - `body`: Email body
+  - `created_at`: Timestamp of creation
+  - `updated_at`: Timestamp of last update
+
+### 13. Invite Links (`invite_links`)
+
+- **Description:** Stores invite links.
+- **Columns:**
+  - `id`: Primary key
+  - `email`: Email associated with the invite
+  - `role`: Role to be assigned
+  - `token`: Token
+  - `expires_at`: Timestamp of creation
+  - `updated_at`: Timestamp of last update
+
+### 14. Waitlist (`waitlist`)
+
+- **Description:** Stores waitlist entries.
+- **Columns:**
+  - `id`: Primary key
+  - `email`: Email of the person on the waitlist
+  - `created_at`: Timestamp of creation
+
+### 15. Blog Posts (`blog_posts`)
+
+- **Description:** Stores blog posts.
+- **Columns:**
+  - `id`: Primary key
+  - `title`: Blog post title
+  - `content`: Blog post content
+  - `author_id`: Foreign key referencing `users`
+  - `created_at`: Timestamp of creation
+  - `updated_at`: Timestamp of last update
+
 
 ## Versioning
 
