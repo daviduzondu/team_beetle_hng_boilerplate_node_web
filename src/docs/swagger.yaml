@@ -1,0 +1,31 @@
+swagger: '2.0'
+info:
+  description: 'This is the API documentation for the Team Beetle Stage 3 Task on the Backend Track'
+  version: '1.0.0'
+  title: 'Team Beetle Boilerplate API documentation'
+  license:
+    name: 'Apache 2.0'
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: 'yourapi.domain.com'
+basePath: '/v1'
+schemes:
+  - 'https'
+  - 'http'
+tags:
+  - name: 'auth'
+    description: 'Authentication related endpoints'
+  - name: 'user'
+    description: 'Operations about user'
+  - name: 'organization'
+    description: 'Operations about organizations'
+  - name: 'payment'
+    description: 'Payment related endpoints'
+  - name: 'admin'
+    description: 'Superadmin operations'
+  - name: 'misc'
+    description: 'Miscellaneous operations'
+paths:
+
+externalDocs:
+  description: "Find out more about this project"
+  url: "https://github.com/daviduzondu/team_beetle_hng_boilerplate_node_web/tree/main"
