@@ -340,7 +340,7 @@ By following these steps, you should have your Node.js and TypeScript applicatio
 
 ## API Endpoints
 
-All API endpoints can be referenced in the [API Reference](API_REFERENCE.md) document.
+All API endpoints can be referenced at https://team-beetle-api-docs.netlify.app/#/ 
 
 ## Database Schema Documentation
 
